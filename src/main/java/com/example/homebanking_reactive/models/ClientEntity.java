@@ -1,6 +1,5 @@
 package com.example.homebanking_reactive.models;
 
-import com.example.homebanking_reactive.builders.ClientBuilder;
 import com.example.homebanking_reactive.enums.RoleType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
@@ -18,8 +17,52 @@ public class ClientEntity {
     public ClientEntity() {
     }
 
+    private ClientEntity(ClientBuilder builder) {
+        this.name = builder.name;
+        this.lastName = builder.lastName;
+        this.role = builder.role != null ? builder.role : RoleType.CLIENT;
+        this.email = builder.email;
+        this.password = builder.password;
+    }
+
     public static ClientBuilder builder() {
         return new ClientBuilder();
+    }
+
+    public static class ClientBuilder {
+
+        private String name, lastName, email, password;
+
+        private RoleType role;
+
+        public ClientBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public ClientBuilder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public ClientBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public ClientBuilder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public ClientBuilder role(RoleType role) {
+            this.role = role;
+            return this;
+        }
+
+        public ClientEntity build() {
+            return new ClientEntity(this);
+        }
     }
 
     public String getId() {
