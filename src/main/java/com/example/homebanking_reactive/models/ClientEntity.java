@@ -4,11 +4,13 @@ import com.example.homebanking_reactive.enums.RoleType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.util.UUID;
+
 @Table("clients")
 public class ClientEntity {
 
     @Id
-    private String id;
+    private UUID id;
 
     private String name, lastName, email, password;
 
@@ -65,7 +67,7 @@ public class ClientEntity {
         }
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
