@@ -24,7 +24,7 @@ public interface ClientService {
 
     // Methods Controller
 
-    Mono<Void> createClient(Mono<ClientApplicationDTO> clientAppDTOMono);
+    Mono<Void> createClient(ClientApplicationDTO clientAppDTO);
 
     Mono<Void> deleteClient(String clientId);
 

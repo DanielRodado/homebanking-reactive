@@ -7,6 +7,7 @@ import com.example.homebanking_reactive.mappers.ClientMapper;
 import com.example.homebanking_reactive.models.ClientEntity;
 import com.example.homebanking_reactive.repositories.ClientRepository;
 import com.example.homebanking_reactive.services.ClientService;
+import com.example.homebanking_reactive.validations.services.ClientServiceValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -21,6 +22,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private ClientServiceValidation clientServiceValidation;
 
     // Methods Repository
 
@@ -58,8 +62,8 @@ public class ClientServiceImpl implements ClientService {
     // Methods Controller
 
     @Override
-    public Mono<Void> createClient(Mono<ClientApplicationDTO> clientAppDTOMono) {
-        return clientAppDTOMono
+    public Mono<Void> createClient(ClientApplicationDTO clientAppDTO) {
+        return clientServiceValidation.validateClientApplicationDTO(clientAppDTO)
                 .map(ClientMapper::toClient)
                 .flatMap(this::saveClient)
                 .then();
