@@ -7,7 +7,7 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.util.UUID;
 
 @Table("clients")
-public class ClientEntity {
+public class ClientModel {
 
     @Id
     private UUID id;
@@ -16,10 +16,10 @@ public class ClientEntity {
 
     private RoleType role;
 
-    public ClientEntity() {
+    public ClientModel() {
     }
 
-    private ClientEntity(ClientBuilder builder) {
+    private ClientModel(ClientBuilder builder) {
         this.name = builder.name;
         this.lastName = builder.lastName;
         this.role = builder.role != null ? builder.role : RoleType.CLIENT;
@@ -62,8 +62,8 @@ public class ClientEntity {
             return this;
         }
 
-        public ClientEntity build() {
-            return new ClientEntity(this);
+        public ClientModel build() {
+            return new ClientModel(this);
         }
     }
 

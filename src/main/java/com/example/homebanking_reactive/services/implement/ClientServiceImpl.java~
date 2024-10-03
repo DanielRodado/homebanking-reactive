@@ -4,7 +4,7 @@ import com.example.homebanking_reactive.dto.ClientApplicationDTO;
 import com.example.homebanking_reactive.dto.ClientDTO;
 import com.example.homebanking_reactive.exceptions.ClientNotFoundException;
 import com.example.homebanking_reactive.mappers.ClientMapper;
-import com.example.homebanking_reactive.models.ClientModel;
+import com.example.homebanking_reactive.models.ClientEntity;
 import com.example.homebanking_reactive.repositories.ClientRepository;
 import com.example.homebanking_reactive.services.ClientService;
 import com.example.homebanking_reactive.validations.services.ClientServiceValidation;
@@ -29,7 +29,7 @@ public class ClientServiceImpl implements ClientService {
     // Methods Repository
 
     @Override
-    public Mono<ClientModel> getClientById(String clientId) {
+    public Mono<ClientEntity> getClientById(String clientId) {
         return Mono.just(clientId)
                 .map(UUID::fromString)
                 .flatMap(clientRepository::findById)
@@ -38,12 +38,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Flux<ClientModel> getClients() {
+    public Flux<ClientEntity> getClients() {
         return clientRepository.findAll();
     }
 
     @Override
-    public Mono<ClientModel> saveClient(ClientModel client) {
+    public Mono<ClientEntity> saveClient(ClientEntity client) {
         return clientRepository.save(client);
     }
 

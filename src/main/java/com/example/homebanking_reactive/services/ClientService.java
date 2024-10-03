@@ -2,7 +2,7 @@ package com.example.homebanking_reactive.services;
 
 import com.example.homebanking_reactive.dto.ClientApplicationDTO;
 import com.example.homebanking_reactive.dto.ClientDTO;
-import com.example.homebanking_reactive.models.ClientEntity;
+import com.example.homebanking_reactive.models.ClientModel;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -10,11 +10,11 @@ public interface ClientService {
 
     // Methods Repository
 
-    Mono<ClientEntity> getClientById(String clientId);
+    Mono<ClientModel> getClientById(String clientId);
 
-    Flux<ClientEntity> getClients();
+    Flux<ClientModel> getClients();
 
-    Mono<ClientEntity> saveClient(ClientEntity client);
+    Mono<ClientModel> saveClient(ClientModel client);
 
     // Methods repository and mapper
 

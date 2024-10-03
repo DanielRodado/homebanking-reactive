@@ -9,7 +9,7 @@ public class ClientDTO {
 
     private final UUID id;
 
-    private final String name, lastName, email, password;
+    private final String name, lastName, email;
 
     private final RoleType role;
 
@@ -18,7 +18,6 @@ public class ClientDTO {
         name = client.getName();
         lastName = client.getLastName();
         email = client.getEmail();
-        password = client.getPassword();
         role = client.getRole();
     }
 
@@ -36,10 +35,6 @@ public class ClientDTO {
 
     public String getEmail() {
         return email;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public RoleType getRole() {

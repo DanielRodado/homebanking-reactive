@@ -1,7 +1,7 @@
 package com.example.homebanking_reactive.dto;
 
 import com.example.homebanking_reactive.enums.RoleType;
-import com.example.homebanking_reactive.models.ClientEntity;
+import com.example.homebanking_reactive.models.ClientModel;
 
 import java.util.UUID;
 
@@ -13,7 +13,7 @@ public class ClientDTO {
 
     private final RoleType role;
 
-    public ClientDTO(ClientEntity client) {
+    public ClientDTO(ClientModel client) {
         id = client.getId();
         name = client.getName();
         lastName = client.getLastName();
