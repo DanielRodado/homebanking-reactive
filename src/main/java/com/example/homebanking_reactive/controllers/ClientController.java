@@ -27,9 +27,9 @@ public class ClientController {
     }
 
     @PostMapping
-    public Mono<ResponseEntity<String>> createClient(@RequestBody Mono<ClientApplicationDTO> clientAppDTOMono){
+    public Mono<ResponseEntity<String>> createClient(@RequestBody ClientApplicationDTO clientAppDTO){
         return clientService
-                .createClient(clientAppDTOMono)
+                .createClient(clientAppDTO)
                 .thenReturn(ResponseEntity.status(201).body("Client created"));
     }
 
