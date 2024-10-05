@@ -1,7 +1,7 @@
 package com.example.homebanking_reactive.services;
 
-import com.example.homebanking_reactive.dto.ClientApplicationDTO;
-import com.example.homebanking_reactive.dto.ClientDTO;
+import com.example.homebanking_reactive.dto.clientDTO.ClientApplicationDTO;
+import com.example.homebanking_reactive.dto.clientDTO.ClientDTO;
 import com.example.homebanking_reactive.models.ClientModel;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

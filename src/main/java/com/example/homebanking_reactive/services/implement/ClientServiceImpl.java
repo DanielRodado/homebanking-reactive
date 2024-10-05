@@ -1,8 +1,8 @@
 package com.example.homebanking_reactive.services.implement;
 
-import com.example.homebanking_reactive.dto.ClientApplicationDTO;
-import com.example.homebanking_reactive.dto.ClientDTO;
-import com.example.homebanking_reactive.exceptions.ClientNotFoundException;
+import com.example.homebanking_reactive.dto.clientDTO.ClientApplicationDTO;
+import com.example.homebanking_reactive.dto.clientDTO.ClientDTO;
+import com.example.homebanking_reactive.exceptions.clientExceptions.ClientNotFoundException;
 import com.example.homebanking_reactive.mappers.ClientMapper;
 import com.example.homebanking_reactive.models.ClientModel;
 import com.example.homebanking_reactive.repositories.ClientRepository;
@@ -30,11 +30,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Mono<ClientModel> getClientById(String clientId) {
-        return Mono.just(clientId)
-                .map(UUID::fromString)
+        return clientServiceValidation.validateClientId(clientId)
                 .flatMap(clientRepository::findById)
-                .switchIfEmpty(Mono.error(new ClientNotFoundException(CLIENT_NOT_FOUND)))
-                .onErrorMap(IllegalArgumentException.class, e -> new ClientNotFoundException(CLIENT_NOT_FOUND));
+                .switchIfEmpty(Mono.error(new ClientNotFoundException(CLIENT_NOT_FOUND)));
     }
 
     @Override
@@ -51,12 +49,12 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Mono<ClientDTO> getClientDTOById(String clientId) {
-        return getClientById(clientId).map(ClientMapper::toClientDTO);
+        return getClientById(clientId).map(ClientDTO::new);
     }
 
     @Override
     public Flux<ClientDTO> getClientsDTO() {
-        return getClients().map(ClientMapper::toClientDTO);
+        return getClients().map(ClientDTO::new);
     }
 
     // Methods Controller

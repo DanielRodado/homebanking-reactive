@@ -1,6 +1,6 @@
 package com.example.homebanking_reactive.validations;
 
-import com.example.homebanking_reactive.dto.ClientApplicationDTO;
+import com.example.homebanking_reactive.dto.clientDTO.ClientApplicationDTO;
 import com.example.homebanking_reactive.exceptions.ValidationException;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
@@ -34,19 +34,19 @@ public class ClientAppValidator implements Validator {
 
     public void validateName(String name) {
         if (name == null || name.isBlank()) {
-            throw new ValidationException(NAME_INVALID);
+            throw new ValidationException(CLIENT_NAME_INVALID);
         }
     }
 
     public void validateLastName(String lastName) {
         if (lastName == null || lastName.isBlank()) {
-            throw new ValidationException(LAST_NAME_INVALID);
+            throw new ValidationException(CLIENT_LAST_NAME_INVALID);
         }
     }
 
     public void validateEmail(String email) {
         if (email == null || email.isBlank()) {
-            throw new ValidationException(EMAIL_INVALID);
+            throw new ValidationException(CLIENT_EMAIL_INVALID);
         }
     }
 
@@ -58,7 +58,7 @@ public class ClientAppValidator implements Validator {
 
     public void validatePassword(String password) {
         if (password == null || password.isBlank()) {
-            throw new ValidationException(PASSWORD_INVALID);
+            throw new ValidationException(CLIENT_PASSWORD_INVALID);
         }
     }
 
