@@ -28,7 +28,7 @@ public class AccountServiceValidationImpl implements AccountServiceValidation {
 
     @Override
     public Mono<Boolean> existsAccountByNumber(String accountNumber) {
-        return null;
+        return accountRepository.existsByNumber(accountNumber);
     }
 
     @Override

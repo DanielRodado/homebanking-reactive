@@ -28,6 +28,10 @@ public interface AccountService {
 
     Mono<Void> createAccount(String accountType, UUID clientId);
 
+    Mono<String> generateUniqueAccountNumber();
+
+    Mono<String> generateAccountNumber();
+
     Mono<AccountModel> generateAccount(AccountType accountType, UUID clientId);
 
     Mono<Void> addClientToAccount(AccountModel account, UUID clientId);

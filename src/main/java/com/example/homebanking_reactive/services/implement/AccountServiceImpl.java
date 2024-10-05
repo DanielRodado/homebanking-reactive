@@ -3,9 +3,11 @@ package com.example.homebanking_reactive.services.implement;
 import com.example.homebanking_reactive.dto.accountDTO.AccountDTO;
 import com.example.homebanking_reactive.enums.AccountType;
 import com.example.homebanking_reactive.exceptions.accountExceptions.AccountNotFoundException;
+import com.example.homebanking_reactive.exceptions.accountExceptions.AccountNumberAlreadyExistsException;
 import com.example.homebanking_reactive.models.AccountModel;
 import com.example.homebanking_reactive.repositories.AccountRepository;
 import com.example.homebanking_reactive.services.AccountService;
+import com.example.homebanking_reactive.utils.AccountUtil;
 import com.example.homebanking_reactive.validations.services.AccountServiceValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,9 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import static com.example.homebanking_reactive.utils.AccountUtil.generateAccountNumber;
 import static com.example.homebanking_reactive.utils.MessageUtil.ACCOUNT_NOT_FOUND;
+import static com.example.homebanking_reactive.utils.MessageUtil.ACCOUNT_NUMBER_ERROR;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -68,8 +72,26 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public Mono<String> generateUniqueAccountNumber() {
+        return Mono.defer(this::generateAccountNumber)
+                .flatMap(accountNumber -> accountServiceValidation.existsAccountByNumber(accountNumber)
+                .flatMap(exists -> exists
+                                ? Mono.error(new AccountNumberAlreadyExistsException(ACCOUNT_NUMBER_ERROR))
+                                : Mono.just(accountNumber)
+                        ))
+                .retry(5);
+    }
+
+    @Override
+    public Mono<String> generateAccountNumber() {
+        return Mono.just(AccountUtil.generateAccountNumber());
+    }
+
+    @Override
     public Mono<AccountModel> generateAccount(AccountType accountType, UUID clientId) {
-        return Mono.just(new AccountModel("", 0.0, accountType, LocalDate.now()))
+        return generateUniqueAccountNumber()
+                .flatMap(accountNumber -> Mono.just(new AccountModel(accountNumber, 0.0, accountType,
+                        LocalDate.now())))
                 .flatMap(accountModel -> addClientToAccount(accountModel, clientId)
                         .thenReturn(accountModel)
                 );

@@ -1,6 +1,7 @@
 package com.example.homebanking_reactive.exceptions;
 
 import com.example.homebanking_reactive.exceptions.accountExceptions.AccountNotFoundException;
+import com.example.homebanking_reactive.exceptions.accountExceptions.AccountNumberAlreadyExistsException;
 import com.example.homebanking_reactive.exceptions.accountExceptions.AccountTypeNotValidException;
 import com.example.homebanking_reactive.exceptions.clientExceptions.ClientEmailAlreadyExistsException;
 import com.example.homebanking_reactive.exceptions.clientExceptions.ClientNotFoundException;
@@ -35,6 +36,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccountTypeNotValidException.class)
     public Mono<ResponseEntity<String>> handleAccountTypeNotValidException(AccountTypeNotValidException ex) {
         return Mono.just(ResponseEntity.badRequest().body(ex.getMessage()));
+    }
+
+    @ExceptionHandler(AccountNumberAlreadyExistsException.class)
+    public Mono<ResponseEntity<String>> handleAccountNumberAlreadyExistsException(AccountNumberAlreadyExistsException ex) {
+        return Mono.just(ResponseEntity.status(403).body(ex.getMessage()));
     }
 
 }

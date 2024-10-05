@@ -14,6 +14,7 @@ public class MessageUtil {
 
     public static final String ACCOUNT_TYPE_INVALID = "Account type invalid";
     public static final String ACCOUNT_TYPE_EMPTY = "Account type cannot be empty";
+    public static final String ACCOUNT_NUMBER_ERROR = "Error generating account number, try again";
 
     public static final String EMAIL_MATCH_REGEX = "The email must be a maximum of 100 characters, including the " +
             "domain @finovate.com. Before the @, upper and lower case letters, numbers and periods (not consecutive) " +
