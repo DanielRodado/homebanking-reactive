@@ -6,3 +6,13 @@ CREATE TABLE IF NOT EXISTS clients (
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS accounts (
+    id UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+    number VARCHAR(10) NOT NULL UNIQUE,
+    balance DOUBLE NOT NULL,
+    type VARCHAR(10) NOT NULL,
+    creation_date DATE NOT NULL,
+    client_id UUID,
+    FOREIGN KEY (client_id) REFERENCES clients(id)
+);
