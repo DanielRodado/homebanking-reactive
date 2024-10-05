@@ -1,7 +1,7 @@
 package com.example.homebanking_reactive.controllers;
 
-import com.example.homebanking_reactive.dto.ClientApplicationDTO;
-import com.example.homebanking_reactive.dto.ClientDTO;
+import com.example.homebanking_reactive.dto.clientDTO.ClientApplicationDTO;
+import com.example.homebanking_reactive.dto.clientDTO.ClientDTO;
 import com.example.homebanking_reactive.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
