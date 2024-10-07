@@ -40,6 +40,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public Flux<AccountModel> getAccountsByClientId(UUID clientId) {
+        return accountRepository.findByClientId(clientId);
+    }
+
+    @Override
     public Flux<AccountModel> getAccounts() {
         return accountRepository.findAll();
     }
@@ -54,6 +59,11 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Mono<AccountDTO> getAccountDTOById(String accountId) {
         return getAccountById(accountId).map(AccountDTO::new);
+    }
+
+    @Override
+    public Flux<AccountDTO> getAccountsDTOByClientId(UUID clientId) {
+        return getAccountsByClientId(clientId).map(AccountDTO::new);
     }
 
     @Override

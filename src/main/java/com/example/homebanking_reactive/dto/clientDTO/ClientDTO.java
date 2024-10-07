@@ -1,8 +1,11 @@
 package com.example.homebanking_reactive.dto.clientDTO;
 
+import com.example.homebanking_reactive.dto.accountDTO.AccountDTO;
 import com.example.homebanking_reactive.enums.RoleType;
 import com.example.homebanking_reactive.models.ClientModel;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class ClientDTO {
@@ -13,6 +16,8 @@ public class ClientDTO {
 
     private final RoleType role;
 
+    private Set<AccountDTO> accountDTOS;
+
     public ClientDTO(ClientModel client) {
         id = client.getId();
         name = client.getName();
@@ -20,6 +25,17 @@ public class ClientDTO {
         email = client.getEmail();
         role = client.getRole();
     }
+
+    public ClientDTO(ClientModel client, Set<AccountDTO> accountDTOS) {
+        id = client.getId();
+        name = client.getName();
+        lastName = client.getLastName();
+        email = client.getEmail();
+        role = client.getRole();
+        this.accountDTOS = accountDTOS;
+    }
+
+
 
     public UUID getId() {
         return id;
@@ -39,5 +55,9 @@ public class ClientDTO {
 
     public RoleType getRole() {
         return role;
+    }
+
+    public Set<AccountDTO> getAccounts() {
+        return accountDTOS;
     }
 }

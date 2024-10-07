@@ -14,6 +14,8 @@ public interface AccountService {
 
     Mono<AccountModel> getAccountById(String accountId);
 
+    Flux<AccountModel> getAccountsByClientId(UUID clientId);
+
     Flux<AccountModel> getAccounts();
 
     Mono<AccountModel> saveAccount(AccountModel account);
@@ -21,6 +23,8 @@ public interface AccountService {
     // Methods repository and mapper
 
     Mono<AccountDTO> getAccountDTOById(String accountId);
+
+    Flux<AccountDTO> getAccountsDTOByClientId(UUID clientId);
 
     Flux<AccountDTO> getAccountsDTO();
 
