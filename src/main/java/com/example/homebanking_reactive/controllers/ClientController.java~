@@ -27,7 +27,7 @@ public class ClientController {
 
     @GetMapping
     public Flux<ClientDTO> getClients(){
-        return clientAccountService.getClientsDTO();
+        return clientService.getClientsDTO();
     }
 
     @PostMapping
