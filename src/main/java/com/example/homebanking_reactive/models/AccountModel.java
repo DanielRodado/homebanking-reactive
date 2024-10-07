@@ -14,7 +14,7 @@ public class AccountModel {
     private UUID id;
 
     private String number;
-    private double balance;
+    private Double balance;
     private AccountType type;
     private LocalDate creationDate;
     private UUID clientId;
@@ -22,7 +22,7 @@ public class AccountModel {
     public AccountModel() {
     }
 
-    public AccountModel(String number, double balance, AccountType type, LocalDate creationDate) {
+    public AccountModel(String number, Double balance, AccountType type, LocalDate creationDate) {
         this.number = number;
         this.balance = balance;
         this.type = type;
@@ -37,11 +37,11 @@ public class AccountModel {
         return number;
     }
 
-    public double getBalance() {
+    public Double getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(Double balance) {
         this.balance = balance;
     }
 
