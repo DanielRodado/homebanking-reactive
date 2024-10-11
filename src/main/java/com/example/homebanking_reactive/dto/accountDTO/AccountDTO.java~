@@ -1,4 +1,0 @@
-package com.example.homebanking_reactive.dto.clientDTO;
-
-public class AccountDTO {
-}

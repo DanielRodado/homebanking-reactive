@@ -2,6 +2,7 @@ package com.example.homebanking_reactive.controllers;
 
 import com.example.homebanking_reactive.dto.accountDTO.AccountDTO;
 import com.example.homebanking_reactive.services.AccountService;
+import com.example.homebanking_reactive.services.AccountTransactionService;
 import com.example.homebanking_reactive.services.ClientAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,9 @@ public class AccountController {
     private AccountService accountService;
 
     @Autowired
+    private AccountTransactionService accountTransactionService;
+
+    @Autowired
     private ClientAccountService clientAccountService;
 
     @GetMapping("/{accountId}")
@@ -28,7 +32,7 @@ public class AccountController {
 
     @GetMapping
     public Flux<AccountDTO> getAccountsDTO() {
-        return accountService.getAccountsDTO();
+        return accountTransactionService.getAccountDTOS();
     }
 
     @PostMapping("/client/{clientId}")

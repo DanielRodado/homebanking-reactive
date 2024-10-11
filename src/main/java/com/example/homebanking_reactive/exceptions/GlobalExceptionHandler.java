@@ -3,6 +3,7 @@ package com.example.homebanking_reactive.exceptions;
 import com.example.homebanking_reactive.exceptions.accountExceptions.AccountNotFoundException;
 import com.example.homebanking_reactive.exceptions.accountExceptions.AccountNumberAlreadyExistsException;
 import com.example.homebanking_reactive.exceptions.accountExceptions.AccountTypeNotValidException;
+import com.example.homebanking_reactive.exceptions.accountExceptions.InsufficientBalanceException;
 import com.example.homebanking_reactive.exceptions.clientExceptions.ClientEmailAlreadyExistsException;
 import com.example.homebanking_reactive.exceptions.clientExceptions.ClientNotFoundException;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AccountNumberAlreadyExistsException.class)
     public Mono<ResponseEntity<String>> handleAccountNumberAlreadyExistsException(AccountNumberAlreadyExistsException ex) {
+        return Mono.just(ResponseEntity.status(403).body(ex.getMessage()));
+    }
+
+    @ExceptionHandler(InsufficientBalanceException.class)
+    public Mono<ResponseEntity<String>> handleInsufficientBalanceException(InsufficientBalanceException ex) {
         return Mono.just(ResponseEntity.status(403).body(ex.getMessage()));
     }
 

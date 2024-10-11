@@ -17,7 +17,6 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import static com.example.homebanking_reactive.utils.AccountUtil.generateAccountNumber;
 import static com.example.homebanking_reactive.utils.MessageUtil.ACCOUNT_NOT_FOUND;
 import static com.example.homebanking_reactive.utils.MessageUtil.ACCOUNT_NUMBER_ERROR;
 
@@ -36,6 +35,13 @@ public class AccountServiceImpl implements AccountService {
     public Mono<AccountModel> getAccountById(String accountId) {
         return accountServiceValidation.validateAccountId(accountId)
                 .flatMap(accountRepository::findById)
+                .switchIfEmpty(Mono.error(new AccountNotFoundException(ACCOUNT_NOT_FOUND)));
+    }
+
+    @Override
+    public Mono<AccountModel> getAccountByNumber(String accountNumber) {
+        return accountRepository
+                .findByNumber(accountNumber)
                 .switchIfEmpty(Mono.error(new AccountNotFoundException(ACCOUNT_NOT_FOUND)));
     }
 

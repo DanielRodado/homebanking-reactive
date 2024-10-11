@@ -16,3 +16,13 @@ CREATE TABLE IF NOT EXISTS accounts (
     client_id UUID,
     FOREIGN KEY (client_id) REFERENCES clients(id)
 );
+
+CREATE TABLE IF NOT EXISTS transactions (
+    id UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+    amount DOUBLE NOT NULL,
+    type VARCHAR(15) NOT NULL,
+    description VARCHAR(101) NOT NULL,
+    date_time TIMESTAMP NOT NULL,
+    account_id UUID,
+    FOREIGN KEY (account_id) REFERENCES accounts(id)
+);

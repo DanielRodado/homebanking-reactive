@@ -1,8 +1,10 @@
 package com.example.homebanking_reactive.validations.services.implement;
 
+import com.example.homebanking_reactive.enums.AccountTransactionType;
 import com.example.homebanking_reactive.enums.AccountType;
 import com.example.homebanking_reactive.exceptions.accountExceptions.AccountNotFoundException;
 import com.example.homebanking_reactive.exceptions.accountExceptions.AccountTypeNotValidException;
+import com.example.homebanking_reactive.exceptions.accountExceptions.InsufficientBalanceException;
 import com.example.homebanking_reactive.repositories.AccountRepository;
 import com.example.homebanking_reactive.validations.services.AccountServiceValidation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,22 @@ public class AccountServiceValidationImpl implements AccountServiceValidation {
     }
 
     @Override
+    public Mono<Void> validateExistsAccountByNumber(String accountNumber) {
+        return existsAccountByNumber(accountNumber)
+                .filter(exists -> exists)
+                .switchIfEmpty(Mono.error(new AccountNotFoundException(ACCOUNT_NOT_FOUND)))
+                .then();
+    }
+
+    @Override
+    public Mono<Void> validateExistsAccountToTransaction(String accountNumber, AccountTransactionType accountTransactionType) {
+        return existsAccountByNumber(accountNumber)
+                .filter(exists -> exists)
+                .switchIfEmpty(Mono.error(new AccountNotFoundException(accountTransactionType.equals(AccountTransactionType.SOURCE) ? ACCOUNT_SOURCE_NOT_FOUND : ACCOUNT_DESTINATION_NOT_FOUND)))
+                .then();
+    }
+
+    @Override
     public Mono<AccountType> validateAccountType(String accountType) {
         return validateAccountTypeNotEmpty(accountType)
                 .map(AccountType::valueOf)
@@ -41,5 +59,18 @@ public class AccountServiceValidationImpl implements AccountServiceValidation {
     @Override
     public Mono<String> validateAccountTypeNotEmpty(String accountType) {
         return accountType.isBlank() ? Mono.error(new AccountTypeNotValidException(ACCOUNT_TYPE_EMPTY)) : Mono.just(accountType);
+    }
+
+    @Override
+    public Mono<Boolean> existsAccountByNumberAndBalanceGreaterThanEqual(String accountNumber, Double balance) {
+        return accountRepository.existsByNumberAndBalanceGreaterThanEqual(accountNumber, balance);
+    }
+
+    @Override
+    public Mono<Void> validateBalanceToAccount(String accountNumber, Double balance) {
+        return existsAccountByNumberAndBalanceGreaterThanEqual(accountNumber, balance)
+                .filter(exists -> exists)
+                .switchIfEmpty(Mono.error(new InsufficientBalanceException(INSUFFICIENT_ACCOUNT_BALANCE)))
+                .then();
     }
 }

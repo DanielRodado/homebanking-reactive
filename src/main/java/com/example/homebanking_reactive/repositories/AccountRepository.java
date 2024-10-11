@@ -11,6 +11,10 @@ public interface AccountRepository extends ReactiveCrudRepository<AccountModel, 
 
     Mono<Boolean> existsByNumber(String accountNumber);
 
+    Mono<Boolean> existsByNumberAndBalanceGreaterThanEqual(String accountNumber, Double balance);
+
+    Mono<AccountModel> findByNumber(String accountNumber);
+
     Flux<AccountModel> findByClientId(UUID clientId);
 
 }

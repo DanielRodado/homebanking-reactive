@@ -14,6 +14,8 @@ public interface AccountService {
 
     Mono<AccountModel> getAccountById(String accountId);
 
+    Mono<AccountModel> getAccountByNumber(String accountNumber);
+
     Flux<AccountModel> getAccountsByClientId(UUID clientId);
 
     Flux<AccountModel> getAccounts();
