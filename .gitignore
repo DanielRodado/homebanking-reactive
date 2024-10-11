@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Utils ###
+src/main/java/com/example/homebanking_reactive/Utils.java
