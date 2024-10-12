@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import static com.example.homebanking_reactive.utils.MessageUtil.ACCOUNT_CREATED;
+import static com.example.homebanking_reactive.utils.AccountMessageUtil.ACCOUNT_CREATED;
 
 @RestController
 @RequestMapping("/api/accounts")

@@ -17,8 +17,8 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import static com.example.homebanking_reactive.utils.MessageUtil.ACCOUNT_NOT_FOUND;
-import static com.example.homebanking_reactive.utils.MessageUtil.ACCOUNT_NUMBER_ERROR;
+import static com.example.homebanking_reactive.utils.AccountMessageUtil.ACCOUNT_NOT_FOUND;
+import static com.example.homebanking_reactive.utils.AccountMessageUtil.ACCOUNT_NUMBER_ERROR;
 
 @Service
 public class AccountServiceImpl implements AccountService {

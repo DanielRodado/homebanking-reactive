@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.UUID;
-
-import static com.example.homebanking_reactive.utils.MessageUtil.CLIENT_NOT_FOUND;
+import static com.example.homebanking_reactive.utils.ClientMessageUtil.CLIENT_NOT_FOUND;
 
 @Service
 public class ClientServiceImpl implements ClientService {

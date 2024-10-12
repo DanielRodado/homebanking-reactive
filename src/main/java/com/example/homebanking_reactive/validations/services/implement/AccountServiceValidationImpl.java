@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
-import static com.example.homebanking_reactive.utils.MessageUtil.*;
+import static com.example.homebanking_reactive.utils.AccountMessageUtil.*;
 
 @Service
 public class AccountServiceValidationImpl implements AccountServiceValidation {

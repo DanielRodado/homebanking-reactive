@@ -15,7 +15,7 @@ public final class TransactionMessageUtil {
     public static final String ACCOUNT_NUMBERS_EQUALS = "Source account number cannot be equal to destination account number";
 
     public static String transactionCompleted(Double amount, String destinationAccountNumber) {
-        return "A transaction of $" + amount +" to account V-" + destinationAccountNumber + " was successfully completed.";
+        return "A transaction of $" + amount +" to account V-" + destinationAccountNumber + " was successfully completed";
     }
 
 }

@@ -6,17 +6,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import static com.example.homebanking_reactive.utils.MessageUtil.*;
+import static com.example.homebanking_reactive.utils.ClientMessageUtil.*;
 
 @Service
 public class ClientAppValidator implements Validator {
 
 
+    @SuppressWarnings("NullableProblems")
     @Override
     public boolean supports(Class<?> clazz) {
         return ClientApplicationDTO.class.equals(clazz);
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     public void validate(Object target, Errors errors) {
         ClientApplicationDTO clientAppDTO = (ClientApplicationDTO) target;

@@ -12,8 +12,8 @@ import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
-import static com.example.homebanking_reactive.utils.MessageUtil.CLIENT_EMAIL_EXIST;
-import static com.example.homebanking_reactive.utils.MessageUtil.CLIENT_NOT_FOUND;
+import static com.example.homebanking_reactive.utils.ClientMessageUtil.CLIENT_EMAIL_EXIST;
+import static com.example.homebanking_reactive.utils.ClientMessageUtil.CLIENT_NOT_FOUND;
 
 @Service
 public class ClientServiceValidationImpl implements ClientServiceValidation {
