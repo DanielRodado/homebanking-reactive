@@ -18,11 +18,25 @@ CREATE TABLE IF NOT EXISTS accounts (
 );
 
 CREATE TABLE IF NOT EXISTS transactions (
-    id UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
-    amount DOUBLE NOT NULL,
-    type VARCHAR(15) NOT NULL,
-    description VARCHAR(101) NOT NULL,
-    date_time TIMESTAMP NOT NULL,
-    account_id UUID,
-    FOREIGN KEY (account_id) REFERENCES accounts(id)
+      id UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+      amount DOUBLE NOT NULL,
+      type VARCHAR(15) NOT NULL,
+      description VARCHAR(101) NOT NULL,
+      date_time TIMESTAMP NOT NULL,
+      account_id UUID,
+      FOREIGN KEY (account_id) REFERENCES accounts(id)
+);
+
+CREATE TABLE IF NOT EXISTS loans (
+      id UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+      name VARCHAR(60) NOT NULL,
+      max_amount DOUBLE NOT NULL,
+      interest_rate DOUBLE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS loan_payments (
+      id UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+      payment INT NOT NULL,
+      loan_id UUID,
+      FOREIGN KEY (loan_id) REFERENCES loans(id)
 );
