@@ -40,3 +40,13 @@ CREATE TABLE IF NOT EXISTS loan_payments (
       loan_id UUID,
       FOREIGN KEY (loan_id) REFERENCES loans(id)
 );
+
+CREATE TABLE IF NOT EXISTS client_loans (
+      id UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+      amount DOUBLE NOT NULL,
+      payment INT NOT NULL,
+      client_id UUID,
+      loan_id UUID,
+      FOREIGN KEY (client_id) REFERENCES clients(id),
+      FOREIGN KEY (loan_id) REFERENCES loans(id)
+);

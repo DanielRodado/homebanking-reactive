@@ -1,5 +1,6 @@
 package com.example.homebanking_reactive.services.implement;
 
+import com.example.homebanking_reactive.dto.accountDTO.AccountDTO;
 import com.example.homebanking_reactive.dto.transactionDTO.TransactionApplicationDTO;
 import com.example.homebanking_reactive.dto.transactionDTO.TransactionDTO;
 import com.example.homebanking_reactive.enums.TransactionType;
@@ -18,6 +19,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.UUID;
 
+import static com.example.homebanking_reactive.mappers.AccountMapper.toAccountDTO;
 import static com.example.homebanking_reactive.mappers.TransactionMapper.toTransaction;
 
 @Service
@@ -36,11 +38,33 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
     private TransactionServiceValidation transactionServiceValidation;
 
     @Override
+    public Mono<AccountDTO> getAccountDTOById(String accountId) {
+        return accountService.getAccountById(accountId).flatMap(this::getTransactionsFromAccount);
+    }
+
+    @Override
+    public Mono<List<AccountDTO>> getAccountsDTOByClientId(UUID clientId) {
+        return accountService.getAccountsByClientId(clientId).flatMap(this::getTransactionsFromAccount).collectList();
+    }
+
+    @Override
+    public Flux<AccountDTO> getAccountsDTO() {
+        return accountService.getAccounts().flatMap(this::getTransactionsFromAccount);
+    }
+
+    @Override
     public Mono<List<TransactionDTO>> getTransactionDTOByAccountId(UUID accountId) {
         return transactionService
                 .getTransactionsDTOByAccountId(accountId)
                 .collectList();
     }
+
+    @Override
+    public Mono<AccountDTO> getTransactionsFromAccount(AccountModel account) {
+        return getTransactionDTOByAccountId(account.getId()).map(transactionDTOS -> toAccountDTO(account, transactionDTOS));
+    }
+
+    // Methods Controller
 
     @Override
     public Flux<TransactionModel> getTransactionsByAccountId(String accountId) {

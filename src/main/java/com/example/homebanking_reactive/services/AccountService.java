@@ -1,6 +1,5 @@
 package com.example.homebanking_reactive.services;
 
-import com.example.homebanking_reactive.dto.accountDTO.AccountDTO;
 import com.example.homebanking_reactive.enums.AccountType;
 import com.example.homebanking_reactive.models.AccountModel;
 import reactor.core.publisher.Flux;
@@ -21,16 +20,6 @@ public interface AccountService {
     Flux<AccountModel> getAccounts();
 
     Mono<AccountModel> saveAccount(AccountModel account);
-
-    // Methods repository and mapper
-
-    Mono<AccountDTO> getAccountDTOById(String accountId);
-
-    Flux<AccountDTO> getAccountsDTOByClientId(UUID clientId);
-
-    Flux<AccountDTO> getAccountsDTO();
-
-    Mono<AccountDTO> getTransactionsDTOFromAccount(AccountModel account);
 
     // Methods Controller
 

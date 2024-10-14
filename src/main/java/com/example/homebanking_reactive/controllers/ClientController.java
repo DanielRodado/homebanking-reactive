@@ -2,6 +2,7 @@ package com.example.homebanking_reactive.controllers;
 
 import com.example.homebanking_reactive.dto.clientDTO.ClientApplicationDTO;
 import com.example.homebanking_reactive.dto.clientDTO.ClientDTO;
+import com.example.homebanking_reactive.services.ClientAccountService;
 import com.example.homebanking_reactive.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +17,17 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
+    @Autowired
+    private ClientAccountService clientAccountService;
+
     @GetMapping("/{clientId}")
     public Mono<ClientDTO> getClientById(@PathVariable String clientId){
-        return clientService.getClientDTOById(clientId);
+        return clientAccountService.getClientDTOById(clientId);
     }
 
     @GetMapping
     public Flux<ClientDTO> getClients(){
-        return clientService.getClientsDTO();
+        return clientAccountService.getClientsDTO();
     }
 
     @PostMapping
