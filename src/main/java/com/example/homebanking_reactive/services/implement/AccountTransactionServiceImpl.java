@@ -2,12 +2,14 @@ package com.example.homebanking_reactive.services.implement;
 
 import com.example.homebanking_reactive.dto.accountDTO.AccountDTO;
 import com.example.homebanking_reactive.dto.transactionDTO.TransactionApplicationDTO;
+import com.example.homebanking_reactive.dto.transactionDTO.TransactionDTO;
 import com.example.homebanking_reactive.enums.TransactionType;
 import com.example.homebanking_reactive.models.AccountModel;
 import com.example.homebanking_reactive.models.TransactionModel;
 import com.example.homebanking_reactive.services.AccountService;
 import com.example.homebanking_reactive.services.AccountTransactionService;
 import com.example.homebanking_reactive.services.TransactionService;
+import com.example.homebanking_reactive.validations.services.AccountServiceValidation;
 import com.example.homebanking_reactive.validations.services.TransactionServiceValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,13 +25,16 @@ import static com.example.homebanking_reactive.mappers.TransactionMapper.toTrans
 public class AccountTransactionServiceImpl implements AccountTransactionService {
 
     @Autowired
-    private TransactionServiceValidation transactionServiceValidation;
-
-    @Autowired
     private AccountService accountService;
 
     @Autowired
     private TransactionService transactionService;
+
+    @Autowired
+    private AccountServiceValidation accountServiceValidation;
+
+    @Autowired
+    private TransactionServiceValidation transactionServiceValidation;
 
     @Override
     public Flux<AccountDTO> getAccountDTOS() {
@@ -39,6 +44,16 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
     @Override
     public Flux<AccountDTO> getAccountsDTOByClientId(UUID clientId) {
         return accountService.getAccountsByClientId(clientId).flatMap(this::getTransactionFromAccount);
+    }
+
+    @Override
+    public Flux<TransactionModel> getTransactionsByAccountId(String accountId) {
+        return accountServiceValidation.validateAccountId(accountId).flatMapMany(transactionService::getTransactionsByAccountId);
+    }
+
+    @Override
+    public Flux<TransactionDTO> getTransactionsDTOByAccountId(String accountId) {
+        return getTransactionsByAccountId(accountId).map(TransactionDTO::new);
     }
 
     @Override

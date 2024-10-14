@@ -18,16 +18,6 @@ public class TransactionServiceImpl implements TransactionService {
     private TransactionRepository transactionRepository;
 
     @Override
-    public Flux<TransactionModel> getTransactions() {
-        return transactionRepository.findAll();
-    }
-
-    @Override
-    public Flux<TransactionDTO> getTransactionDTOS() {
-        return getTransactions().map(TransactionDTO::new);
-    }
-
-    @Override
     public Flux<TransactionModel> getTransactionsByAccountId(UUID accountId) {
         return transactionRepository.findByAccountId(accountId);
     }

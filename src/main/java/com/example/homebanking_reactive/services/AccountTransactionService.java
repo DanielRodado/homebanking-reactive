@@ -2,6 +2,7 @@ package com.example.homebanking_reactive.services;
 
 import com.example.homebanking_reactive.dto.accountDTO.AccountDTO;
 import com.example.homebanking_reactive.dto.transactionDTO.TransactionApplicationDTO;
+import com.example.homebanking_reactive.dto.transactionDTO.TransactionDTO;
 import com.example.homebanking_reactive.enums.TransactionType;
 import com.example.homebanking_reactive.models.AccountModel;
 import com.example.homebanking_reactive.models.TransactionModel;
@@ -15,6 +16,10 @@ public interface AccountTransactionService {
     Flux<AccountDTO> getAccountDTOS();
 
     Flux<AccountDTO> getAccountsDTOByClientId(UUID clientId);
+
+    Flux<TransactionModel> getTransactionsByAccountId(String accountId);
+
+    Flux<TransactionDTO> getTransactionsDTOByAccountId(String accountId);
 
     Mono<AccountDTO> getTransactionFromAccount(AccountModel accountModel);
 

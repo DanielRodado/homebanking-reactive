@@ -9,10 +9,6 @@ import java.util.UUID;
 
 public interface TransactionService {
 
-    Flux<TransactionModel> getTransactions();
-
-    Flux<TransactionDTO> getTransactionDTOS();
-
     Flux<TransactionModel> getTransactionsByAccountId(UUID accountId);
 
     Flux<TransactionDTO> getTransactionsDTOByAccountId(UUID accountId);

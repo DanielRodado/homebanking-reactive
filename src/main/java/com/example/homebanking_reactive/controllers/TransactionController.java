@@ -3,14 +3,11 @@ package com.example.homebanking_reactive.controllers;
 import com.example.homebanking_reactive.dto.transactionDTO.TransactionApplicationDTO;
 import com.example.homebanking_reactive.dto.transactionDTO.TransactionDTO;
 import com.example.homebanking_reactive.services.AccountTransactionService;
-import com.example.homebanking_reactive.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.UUID;
 
 import static com.example.homebanking_reactive.utils.TransactionMessageUtil.transactionCompleted;
 
@@ -21,17 +18,9 @@ public class TransactionController {
     @Autowired
     private AccountTransactionService accountTransactionService;
 
-    @Autowired
-    private TransactionService transactionService;
-
-    @GetMapping
-    public Flux<TransactionDTO> getTransactionDTOS() {
-        return transactionService.getTransactionDTOS();
-    }
-
-    @GetMapping("/{accountId}")
+    @GetMapping("/account/{accountId}")
     public Flux<TransactionDTO> getTransactionsFromAccount(@PathVariable String accountId) {
-        return transactionService.getTransactionsDTOByAccountId(UUID.fromString(accountId));
+        return accountTransactionService.getTransactionsDTOByAccountId(accountId);
     }
 
     @PostMapping
