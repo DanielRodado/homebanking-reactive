@@ -22,6 +22,8 @@ public interface ClientService {
 
     Flux<ClientDTO> getClientsDTO();
 
+    Mono<ClientDTO> getAccountsDTOFromClient(ClientModel client);
+
     // Methods Controller
 
     Mono<Void> createClient(ClientApplicationDTO clientAppDTO);

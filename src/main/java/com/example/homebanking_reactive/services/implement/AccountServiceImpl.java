@@ -7,6 +7,7 @@ import com.example.homebanking_reactive.exceptions.accountExceptions.AccountNumb
 import com.example.homebanking_reactive.models.AccountModel;
 import com.example.homebanking_reactive.repositories.AccountRepository;
 import com.example.homebanking_reactive.services.AccountService;
+import com.example.homebanking_reactive.services.AccountTransactionService;
 import com.example.homebanking_reactive.utils.AccountUtil;
 import com.example.homebanking_reactive.validations.services.AccountServiceValidation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import static com.example.homebanking_reactive.mappers.AccountMapper.toAccountDTO;
 import static com.example.homebanking_reactive.utils.AccountMessageUtil.ACCOUNT_NOT_FOUND;
 import static com.example.homebanking_reactive.utils.AccountMessageUtil.ACCOUNT_NUMBER_ERROR;
 
@@ -28,6 +30,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private AccountServiceValidation accountServiceValidation;
+
+    @Autowired
+    private AccountTransactionService accountTransactionService;
 
     // Methods Repository
 
@@ -64,17 +69,24 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Mono<AccountDTO> getAccountDTOById(String accountId) {
-        return getAccountById(accountId).map(AccountDTO::new);
+        return getAccountById(accountId).flatMap(this::getTransactionsDTOFromAccount);
     }
 
     @Override
     public Flux<AccountDTO> getAccountsDTOByClientId(UUID clientId) {
-        return getAccountsByClientId(clientId).map(AccountDTO::new);
+        return getAccountsByClientId(clientId).flatMap(this::getTransactionsDTOFromAccount);
     }
 
     @Override
     public Flux<AccountDTO> getAccountsDTO() {
-        return getAccounts().map(AccountDTO::new);
+        return getAccounts().flatMap(this::getTransactionsDTOFromAccount);
+    }
+
+    @Override
+    public Mono<AccountDTO> getTransactionsDTOFromAccount(AccountModel account) {
+        return accountTransactionService
+                .getTransactionDTOByAccountId(account.getId())
+                .map(transactionDTOS -> toAccountDTO(account, transactionDTOS));
     }
 
     // Methods Controller

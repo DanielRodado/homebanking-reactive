@@ -30,6 +30,8 @@ public interface AccountService {
 
     Flux<AccountDTO> getAccountsDTO();
 
+    Mono<AccountDTO> getTransactionsDTOFromAccount(AccountModel account);
+
     // Methods Controller
 
     Mono<Void> createAccount(String accountType, UUID clientId);

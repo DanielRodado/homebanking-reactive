@@ -1,21 +1,17 @@
 package com.example.homebanking_reactive.services.implement;
 
-import com.example.homebanking_reactive.dto.clientDTO.ClientDTO;
-import com.example.homebanking_reactive.models.ClientModel;
+import com.example.homebanking_reactive.dto.accountDTO.AccountDTO;
 import com.example.homebanking_reactive.services.*;
 import com.example.homebanking_reactive.validations.services.ClientServiceValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import static com.example.homebanking_reactive.mappers.ClientMapper.toClientDTO;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ClientAccountServiceImpl implements ClientAccountService {
-
-    @Autowired
-    private ClientService clientService;
 
     @Autowired
     private AccountService accountService;
@@ -27,21 +23,10 @@ public class ClientAccountServiceImpl implements ClientAccountService {
     private ClientServiceValidation clientServiceValidation;
 
     @Override
-    public Mono<ClientDTO> getClientDTOById(String clientId) {
-        return clientService.getClientById(clientId).flatMap(this::getAccountsFromClient);
-    }
-
-    @Override
-    public Flux<ClientDTO> getClientsDTO() {
-        return clientService.getClients().flatMap(this::getAccountsFromClient);
-    }
-
-    @Override
-    public Mono<ClientDTO> getAccountsFromClient(ClientModel client) {
+    public Mono<List<AccountDTO>> getAccountsDTOFromClientId(UUID clientId) {
         return accountTransactionService
-                .getAccountsDTOByClientId(client.getId())
-                .collectList()
-                .map(accountDTOS -> toClientDTO(client, accountDTOS));
+                .getAccountsDTOByClientId(clientId)
+                .collectList();
     }
 
     public Mono<Void> createAccount(String accountType, String clientId) {

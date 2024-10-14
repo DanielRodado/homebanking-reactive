@@ -2,7 +2,6 @@ package com.example.homebanking_reactive.controllers;
 
 import com.example.homebanking_reactive.dto.clientDTO.ClientApplicationDTO;
 import com.example.homebanking_reactive.dto.clientDTO.ClientDTO;
-import com.example.homebanking_reactive.services.ClientAccountService;
 import com.example.homebanking_reactive.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +16,14 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
-    @Autowired
-    private ClientAccountService clientAccountService;
-
     @GetMapping("/{clientId}")
     public Mono<ClientDTO> getClientById(@PathVariable String clientId){
-        return clientAccountService.getClientDTOById(clientId);
+        return clientService.getClientDTOById(clientId);
     }
 
     @GetMapping
     public Flux<ClientDTO> getClients(){
-        return clientAccountService.getClientsDTO();
+        return clientService.getClientsDTO();
     }
 
     @PostMapping
@@ -37,11 +33,11 @@ public class ClientController {
                 .thenReturn(ResponseEntity.status(201).body("Client created"));
     }
 
-    @DeleteMapping("/{clientId}")
+    /*@DeleteMapping("/{clientId}")
     public Mono<ResponseEntity<String>> deleteClient(@PathVariable String clientId){
         return clientService
                 .deleteClient(clientId)
                 .thenReturn(ResponseEntity.noContent().build());
-    }
+    }*/
 
 }

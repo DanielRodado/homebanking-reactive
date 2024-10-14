@@ -6,6 +6,7 @@ import com.example.homebanking_reactive.exceptions.clientExceptions.ClientNotFou
 import com.example.homebanking_reactive.mappers.ClientMapper;
 import com.example.homebanking_reactive.models.ClientModel;
 import com.example.homebanking_reactive.repositories.ClientRepository;
+import com.example.homebanking_reactive.services.ClientAccountService;
 import com.example.homebanking_reactive.services.ClientService;
 import com.example.homebanking_reactive.validations.services.ClientServiceValidation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import static com.example.homebanking_reactive.mappers.ClientMapper.toClientDTO;
 import static com.example.homebanking_reactive.utils.ClientMessageUtil.CLIENT_NOT_FOUND;
 
 @Service
@@ -23,6 +25,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Autowired
     private ClientServiceValidation clientServiceValidation;
+
+    @Autowired
+    private ClientAccountService clientAccountService;
 
     // Methods Repository
 
@@ -47,12 +52,19 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Mono<ClientDTO> getClientDTOById(String clientId) {
-        return getClientById(clientId).map(ClientDTO::new);
+        return getClientById(clientId).flatMap(this::getAccountsDTOFromClient);
     }
 
     @Override
     public Flux<ClientDTO> getClientsDTO() {
-        return getClients().map(ClientDTO::new);
+        return getClients().flatMap(this::getAccountsDTOFromClient);
+    }
+
+    @Override
+    public Mono<ClientDTO> getAccountsDTOFromClient(ClientModel client) {
+        return clientAccountService
+                .getAccountsDTOFromClientId(client.getId())
+                .map(accountDTOS -> toClientDTO(client, accountDTOS));
     }
 
     // Methods Controller

@@ -1,6 +1,5 @@
 package com.example.homebanking_reactive.services.implement;
 
-import com.example.homebanking_reactive.dto.accountDTO.AccountDTO;
 import com.example.homebanking_reactive.dto.transactionDTO.TransactionApplicationDTO;
 import com.example.homebanking_reactive.dto.transactionDTO.TransactionDTO;
 import com.example.homebanking_reactive.enums.TransactionType;
@@ -16,9 +15,9 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.UUID;
 
-import static com.example.homebanking_reactive.mappers.AccountMapper.toAccountDTO;
 import static com.example.homebanking_reactive.mappers.TransactionMapper.toTransaction;
 
 @Service
@@ -37,13 +36,10 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
     private TransactionServiceValidation transactionServiceValidation;
 
     @Override
-    public Flux<AccountDTO> getAccountDTOS() {
-        return accountService.getAccounts().flatMap(this::getTransactionFromAccount);
-    }
-
-    @Override
-    public Flux<AccountDTO> getAccountsDTOByClientId(UUID clientId) {
-        return accountService.getAccountsByClientId(clientId).flatMap(this::getTransactionFromAccount);
+    public Mono<List<TransactionDTO>> getTransactionDTOByAccountId(UUID accountId) {
+        return transactionService
+                .getTransactionsDTOByAccountId(accountId)
+                .collectList();
     }
 
     @Override
@@ -54,14 +50,6 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
     @Override
     public Flux<TransactionDTO> getTransactionsDTOByAccountId(String accountId) {
         return getTransactionsByAccountId(accountId).map(TransactionDTO::new);
-    }
-
-    @Override
-    public Mono<AccountDTO> getTransactionFromAccount(AccountModel accountModel) {
-        return transactionService
-                .getTransactionsDTOByAccountId(accountModel.getId())
-                .collectList()
-                .map(transactionDTOS -> toAccountDTO(accountModel, transactionDTOS));
     }
 
     @Override
