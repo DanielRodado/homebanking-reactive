@@ -22,12 +22,12 @@ public class ClientController {
 
     @GetMapping("/{clientId}")
     public Mono<ClientDTO> getClientById(@PathVariable String clientId){
-        return clientAccountService.getClientDTOById(clientId);
+        return clientService.getClientDTOById(clientId);
     }
 
     @GetMapping
     public Flux<ClientDTO> getClients(){
-        return clientAccountService.getClientsDTO();
+        return clientService.getClientsDTO();
     }
 
     @PostMapping

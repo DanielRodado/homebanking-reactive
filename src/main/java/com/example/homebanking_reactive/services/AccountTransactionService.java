@@ -14,15 +14,15 @@ import java.util.UUID;
 
 public interface AccountTransactionService {
 
+    Mono<List<TransactionDTO>> getTransactionDTOByAccountId(UUID accountId);
+
+    Mono<AccountDTO> getTransactionsFromAccount(AccountModel account);
+
     Mono<AccountDTO> getAccountDTOById(String accountId);
 
     Mono<List<AccountDTO>> getAccountsDTOByClientId(UUID clientId);
 
     Flux<AccountDTO> getAccountsDTO();
-
-    Mono<List<TransactionDTO>> getTransactionDTOByAccountId(UUID accountId);
-
-    Mono<AccountDTO> getTransactionsFromAccount(AccountModel account);
 
     // Methods Controller
 

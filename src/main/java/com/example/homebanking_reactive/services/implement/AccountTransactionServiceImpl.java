@@ -38,6 +38,18 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
     private TransactionServiceValidation transactionServiceValidation;
 
     @Override
+    public Mono<List<TransactionDTO>> getTransactionDTOByAccountId(UUID accountId) {
+        return transactionService
+                .getTransactionsDTOByAccountId(accountId)
+                .collectList();
+    }
+
+    @Override
+    public Mono<AccountDTO> getTransactionsFromAccount(AccountModel account) {
+        return getTransactionDTOByAccountId(account.getId()).map(transactionDTOS -> toAccountDTO(account, transactionDTOS));
+    }
+
+    @Override
     public Mono<AccountDTO> getAccountDTOById(String accountId) {
         return accountService.getAccountById(accountId).flatMap(this::getTransactionsFromAccount);
     }
@@ -50,18 +62,6 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
     @Override
     public Flux<AccountDTO> getAccountsDTO() {
         return accountService.getAccounts().flatMap(this::getTransactionsFromAccount);
-    }
-
-    @Override
-    public Mono<List<TransactionDTO>> getTransactionDTOByAccountId(UUID accountId) {
-        return transactionService
-                .getTransactionsDTOByAccountId(accountId)
-                .collectList();
-    }
-
-    @Override
-    public Mono<AccountDTO> getTransactionsFromAccount(AccountModel account) {
-        return getTransactionDTOByAccountId(account.getId()).map(transactionDTOS -> toAccountDTO(account, transactionDTOS));
     }
 
     // Methods Controller

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 import static com.example.homebanking_reactive.mappers.LoanMapper.toLoanDTO;
 
 @Service
@@ -20,6 +22,16 @@ public class LoanServiceImpl implements LoanService {
 
     @Autowired
     private LoanPaymentService loanPaymentService;
+
+    @Override
+    public Mono<LoanModel> getLoanById(UUID loanId) {
+        return loanRepository.findById(loanId);
+    }
+
+    @Override
+    public Mono<String> getNameOfLoanById(UUID loanId) {
+        return getLoanById(loanId).map(LoanModel::getName);
+    }
 
     @Override
     public Flux<LoanModel> getLoans() {

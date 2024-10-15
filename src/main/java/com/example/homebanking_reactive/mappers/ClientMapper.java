@@ -1,11 +1,10 @@
 package com.example.homebanking_reactive.mappers;
 
-import com.example.homebanking_reactive.dto.accountDTO.AccountDTO;
 import com.example.homebanking_reactive.dto.clientDTO.ClientApplicationDTO;
 import com.example.homebanking_reactive.dto.clientDTO.ClientDTO;
 import com.example.homebanking_reactive.models.ClientModel;
+import reactor.core.publisher.Mono;
 
-import java.util.HashSet;
 import java.util.List;
 
 public class ClientMapper {
@@ -19,8 +18,12 @@ public class ClientMapper {
                .build();
    }
 
-   public static ClientDTO toClientDTO(ClientModel client, List<AccountDTO> accountDTOS) {
-       return new ClientDTO(client, new HashSet<>(accountDTOS));
+   public static ClientDTO toClientDTO(ClientModel client) {
+       return new ClientDTO(client);
    }
+
+   public static Mono<ClientDTO> toClientDTOMono(ClientModel client) {
+       return Mono.just(toClientDTO(client));
+   };
 
 }

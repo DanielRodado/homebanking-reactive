@@ -5,7 +5,13 @@ import com.example.homebanking_reactive.models.LoanModel;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 public interface LoanService {
+
+    Mono<LoanModel> getLoanById(UUID loanId);
+
+    Mono<String> getNameOfLoanById(UUID loanId);
 
     Flux<LoanModel> getLoans();
 
