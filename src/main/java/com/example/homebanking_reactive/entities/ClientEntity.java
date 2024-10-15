@@ -111,6 +111,10 @@ public class ClientEntity {
         this.role = role;
     }
 
+    public String getFullName() {
+        return name + " " + lastName;
+    }
+
     @Override
     public String toString() {
         return "Client{" +

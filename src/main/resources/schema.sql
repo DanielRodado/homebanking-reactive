@@ -50,3 +50,16 @@ CREATE TABLE IF NOT EXISTS client_loans (
       FOREIGN KEY (client_id) REFERENCES clients(id),
       FOREIGN KEY (loan_id) REFERENCES loans(id)
 );
+
+CREATE TABLE IF NOT EXISTS cards (
+      id UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+      card_holder VARCHAR(150) NOT NULL,
+      number VARCHAR(20) NOT NULL UNIQUE,
+      cvv CHAR(3) NOT NULL UNIQUE,
+      from_date DATE NOT NULL,
+      thru_date DATE NOT NULL,
+      color VARCHAR(10),
+      type VARCHAR(8),
+      client_id UUID,
+      FOREIGN KEY (client_id) REFERENCES clients(id)
+);
