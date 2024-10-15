@@ -1,7 +1,7 @@
 package com.example.homebanking_reactive.services.implement;
 
 import com.example.homebanking_reactive.dto.clientDTO.ClientDTO;
-import com.example.homebanking_reactive.models.ClientModel;
+import com.example.homebanking_reactive.entities.ClientEntity;
 import com.example.homebanking_reactive.services.*;
 import com.example.homebanking_reactive.validations.services.ClientServiceValidation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import reactor.core.publisher.Mono;
 
 import java.util.HashSet;
 
-import static com.example.homebanking_reactive.mappers.ClientMapper.toClientDTO;
 import static com.example.homebanking_reactive.mappers.ClientMapper.toClientDTOMono;
 
 @Service
@@ -26,7 +25,7 @@ public class ClientAccountServiceImpl implements ClientAccountService {
     private ClientServiceValidation clientServiceValidation;
 
     @Override
-    public Mono<ClientDTO> getAccountsFromClient(ClientModel client) {
+    public Mono<ClientDTO> getAccountsFromClient(ClientEntity client) {
         return accountTransactionService.getAccountsDTOByClientId(client.getId())
                 .flatMap(accountDTOS -> toClientDTOMono(client)
                         .flatMap(clientDTO -> {

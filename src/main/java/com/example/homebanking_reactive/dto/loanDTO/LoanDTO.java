@@ -1,6 +1,6 @@
 package com.example.homebanking_reactive.dto.loanDTO;
 
-import com.example.homebanking_reactive.models.LoanModel;
+import com.example.homebanking_reactive.entities.LoanEntity;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,7 +12,7 @@ public class LoanDTO {
     private final Double maxAmount, interestRate;
     private List<Integer> payments;
 
-    public LoanDTO(LoanModel loan, List<Integer> payments) {
+    public LoanDTO(LoanEntity loan, List<Integer> payments) {
         id = loan.getId();
         name = loan.getName();
         maxAmount = loan.getMaxAmount();

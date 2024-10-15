@@ -1,4 +1,4 @@
-package com.example.homebanking_reactive.models;
+package com.example.homebanking_reactive.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
@@ -6,7 +6,7 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.util.UUID;
 
 @Table("loan_payments")
-public class LoanPaymentModel {
+public class LoanPaymentEntity {
 
     @Id
     private UUID id;
@@ -15,10 +15,10 @@ public class LoanPaymentModel {
 
     private UUID loanId;
 
-    public LoanPaymentModel() {
+    public LoanPaymentEntity() {
     }
 
-    public LoanPaymentModel(int payment) {
+    public LoanPaymentEntity(int payment) {
         this.payment = payment;
     }
 

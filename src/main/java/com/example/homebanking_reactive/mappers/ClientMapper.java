@@ -2,15 +2,13 @@ package com.example.homebanking_reactive.mappers;
 
 import com.example.homebanking_reactive.dto.clientDTO.ClientApplicationDTO;
 import com.example.homebanking_reactive.dto.clientDTO.ClientDTO;
-import com.example.homebanking_reactive.models.ClientModel;
+import com.example.homebanking_reactive.entities.ClientEntity;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
+public final class ClientMapper {
 
-public class ClientMapper {
-
-   public static ClientModel toClient(ClientApplicationDTO clientAppDTO) {
-       return ClientModel.builder()
+   public static ClientEntity toClient(ClientApplicationDTO clientAppDTO) {
+       return ClientEntity.builder()
                .name(clientAppDTO.name())
                .lastName(clientAppDTO.lastName())
                .email(clientAppDTO.email())
@@ -18,11 +16,11 @@ public class ClientMapper {
                .build();
    }
 
-   public static ClientDTO toClientDTO(ClientModel client) {
+   public static ClientDTO toClientDTO(ClientEntity client) {
        return new ClientDTO(client);
    }
 
-   public static Mono<ClientDTO> toClientDTOMono(ClientModel client) {
+   public static Mono<ClientDTO> toClientDTOMono(ClientEntity client) {
        return Mono.just(toClientDTO(client));
    };
 

@@ -3,9 +3,8 @@ package com.example.homebanking_reactive.dto.clientDTO;
 import com.example.homebanking_reactive.dto.accountDTO.AccountDTO;
 import com.example.homebanking_reactive.dto.loanDTO.ClientLoanDTO;
 import com.example.homebanking_reactive.enums.RoleType;
-import com.example.homebanking_reactive.models.ClientModel;
+import com.example.homebanking_reactive.entities.ClientEntity;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -21,7 +20,7 @@ public class ClientDTO {
 
     private Set<ClientLoanDTO> loans;
 
-    public ClientDTO(ClientModel client) {
+    public ClientDTO(ClientEntity client) {
         id = client.getId();
         name = client.getName();
         lastName = client.getLastName();

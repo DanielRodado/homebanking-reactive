@@ -4,8 +4,8 @@ import com.example.homebanking_reactive.dto.accountDTO.AccountDTO;
 import com.example.homebanking_reactive.dto.transactionDTO.TransactionApplicationDTO;
 import com.example.homebanking_reactive.dto.transactionDTO.TransactionDTO;
 import com.example.homebanking_reactive.enums.TransactionType;
-import com.example.homebanking_reactive.models.AccountModel;
-import com.example.homebanking_reactive.models.TransactionModel;
+import com.example.homebanking_reactive.entities.AccountEntity;
+import com.example.homebanking_reactive.entities.TransactionEntity;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -16,7 +16,7 @@ public interface AccountTransactionService {
 
     Mono<List<TransactionDTO>> getTransactionDTOByAccountId(UUID accountId);
 
-    Mono<AccountDTO> getTransactionsFromAccount(AccountModel account);
+    Mono<AccountDTO> getTransactionsFromAccount(AccountEntity account);
 
     Mono<AccountDTO> getAccountDTOById(String accountId);
 
@@ -28,18 +28,18 @@ public interface AccountTransactionService {
 
     Flux<TransactionDTO> getTransactionsDTOByAccountId(String accountId);
 
-    Flux<TransactionModel> getTransactionsByAccountId(String accountId);
+    Flux<TransactionEntity> getTransactionsByAccountId(String accountId);
 
     Mono<Void> createTransaction(TransactionApplicationDTO transactionAppDTO);
 
-    Mono<TransactionModel> generateTransaction(TransactionApplicationDTO transactionAppDTO, TransactionType transactionType);
+    Mono<TransactionEntity> generateTransaction(TransactionApplicationDTO transactionAppDTO, TransactionType transactionType);
 
-    Mono<TransactionModel> assignTransactionToAccount(TransactionModel transaction, UUID accountId);
+    Mono<TransactionEntity> assignTransactionToAccount(TransactionEntity transaction, UUID accountId);
 
-    Mono<TransactionModel> getAccountToAssignTransaction(TransactionApplicationDTO transactionAppDTO,
-                                                         String accountNumber,
-                                                         TransactionType transactionType);
+    Mono<TransactionEntity> getAccountToAssignTransaction(TransactionApplicationDTO transactionAppDTO,
+                                                          String accountNumber,
+                                                          TransactionType transactionType);
 
-    Mono<AccountModel> setBalanceToAccount(AccountModel account, Double amount, TransactionType transactionType);
+    Mono<AccountEntity> setBalanceToAccount(AccountEntity account, Double amount, TransactionType transactionType);
 
 }

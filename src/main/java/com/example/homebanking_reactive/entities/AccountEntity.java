@@ -1,4 +1,4 @@
-package com.example.homebanking_reactive.models;
+package com.example.homebanking_reactive.entities;
 
 import com.example.homebanking_reactive.enums.AccountType;
 import org.springframework.data.annotation.Id;
@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Table("accounts")
-public class AccountModel {
+public class AccountEntity {
 
     @Id
     private UUID id;
@@ -19,10 +19,10 @@ public class AccountModel {
     private LocalDate creationDate;
     private UUID clientId;
 
-    public AccountModel() {
+    public AccountEntity() {
     }
 
-    public AccountModel(String number, Double balance, AccountType type, LocalDate creationDate) {
+    public AccountEntity(String number, Double balance, AccountType type, LocalDate creationDate) {
         this.number = number;
         this.balance = balance;
         this.type = type;

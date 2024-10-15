@@ -1,7 +1,7 @@
 package com.example.homebanking_reactive.dto.transactionDTO;
 
 import com.example.homebanking_reactive.enums.TransactionType;
-import com.example.homebanking_reactive.models.TransactionModel;
+import com.example.homebanking_reactive.entities.TransactionEntity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -14,7 +14,7 @@ public class TransactionDTO {
     private final String description;
     private final LocalDateTime dateTime;
 
-    public TransactionDTO(TransactionModel transaction) {
+    public TransactionDTO(TransactionEntity transaction) {
         id = transaction.getId();
         amount = transaction.getAmount();
         transactionType = transaction.getTransactionType();

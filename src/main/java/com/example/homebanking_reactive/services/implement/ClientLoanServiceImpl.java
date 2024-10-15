@@ -2,7 +2,7 @@ package com.example.homebanking_reactive.services.implement;
 
 import com.example.homebanking_reactive.dto.clientDTO.ClientDTO;
 import com.example.homebanking_reactive.dto.loanDTO.ClientLoanDTO;
-import com.example.homebanking_reactive.models.ClientLoanModel;
+import com.example.homebanking_reactive.entities.ClientLoanEntity;
 import com.example.homebanking_reactive.repositories.ClientLoanRepository;
 import com.example.homebanking_reactive.services.ClientLoanService;
 import com.example.homebanking_reactive.services.LoanService;
@@ -25,7 +25,7 @@ public class ClientLoanServiceImpl implements ClientLoanService {
     private LoanService loanService;
 
     @Override
-    public Flux<ClientLoanModel> getClientLoansByClientId(UUID clientId) {
+    public Flux<ClientLoanEntity> getClientLoansByClientId(UUID clientId) {
         return clientLoanRepository.findByClientId(clientId);
     }
 
@@ -49,7 +49,7 @@ public class ClientLoanServiceImpl implements ClientLoanService {
     }
 
     @Override
-    public Mono<ClientLoanModel> saveClientLoan(ClientLoanModel clientLoan) {
+    public Mono<ClientLoanEntity> saveClientLoan(ClientLoanEntity clientLoan) {
         return clientLoanRepository.save(clientLoan);
     }
 }

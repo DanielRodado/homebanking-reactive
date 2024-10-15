@@ -1,6 +1,6 @@
 package com.example.homebanking_reactive.dto.loanDTO;
 
-import com.example.homebanking_reactive.models.ClientLoanModel;
+import com.example.homebanking_reactive.entities.ClientLoanEntity;
 
 import java.util.UUID;
 
@@ -12,7 +12,7 @@ public class ClientLoanDTO {
     private final Double amount;
     private final int payments;
 
-    public ClientLoanDTO(ClientLoanModel clientLoan, String loanName) {
+    public ClientLoanDTO(ClientLoanEntity clientLoan, String loanName) {
         id = clientLoan.getId();
         loanId = clientLoan.getLoanId();
         name = loanName;

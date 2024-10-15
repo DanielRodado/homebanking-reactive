@@ -1,7 +1,7 @@
 package com.example.homebanking_reactive.services.implement;
 
 import com.example.homebanking_reactive.dto.loanDTO.LoanDTO;
-import com.example.homebanking_reactive.models.LoanModel;
+import com.example.homebanking_reactive.entities.LoanEntity;
 import com.example.homebanking_reactive.repositories.LoanRepository;
 import com.example.homebanking_reactive.services.LoanPaymentService;
 import com.example.homebanking_reactive.services.LoanService;
@@ -24,17 +24,17 @@ public class LoanServiceImpl implements LoanService {
     private LoanPaymentService loanPaymentService;
 
     @Override
-    public Mono<LoanModel> getLoanById(UUID loanId) {
+    public Mono<LoanEntity> getLoanById(UUID loanId) {
         return loanRepository.findById(loanId);
     }
 
     @Override
     public Mono<String> getNameOfLoanById(UUID loanId) {
-        return getLoanById(loanId).map(LoanModel::getName);
+        return getLoanById(loanId).map(LoanEntity::getName);
     }
 
     @Override
-    public Flux<LoanModel> getLoans() {
+    public Flux<LoanEntity> getLoans() {
         return loanRepository.findAll();
     }
 
@@ -44,7 +44,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public Mono<LoanDTO> getPaymentsFromLoan(LoanModel loanModel) {
+    public Mono<LoanDTO> getPaymentsFromLoan(LoanEntity loanModel) {
         return loanPaymentService
                 .getPaymentsByLoanId(loanModel.getId())
                 .collectList()

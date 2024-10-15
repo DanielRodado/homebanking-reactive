@@ -2,7 +2,7 @@ package com.example.homebanking_reactive.dto.accountDTO;
 
 import com.example.homebanking_reactive.dto.transactionDTO.TransactionDTO;
 import com.example.homebanking_reactive.enums.AccountType;
-import com.example.homebanking_reactive.models.AccountModel;
+import com.example.homebanking_reactive.entities.AccountEntity;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -17,7 +17,7 @@ public class AccountDTO {
     private final LocalDate creationDate;
     private Set<TransactionDTO> transactionDTOS;
 
-    public AccountDTO(AccountModel account) {
+    public AccountDTO(AccountEntity account) {
         id = account.getId();
         number = account.getNumber();
         balance = account.getBalance();
@@ -25,7 +25,7 @@ public class AccountDTO {
         creationDate = account.getCreationDate();
     }
 
-    public AccountDTO(AccountModel account, Set<TransactionDTO> transactionDTOS) {
+    public AccountDTO(AccountEntity account, Set<TransactionDTO> transactionDTOS) {
         id = account.getId();
         number = account.getNumber();
         balance = account.getBalance();

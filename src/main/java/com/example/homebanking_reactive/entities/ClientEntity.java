@@ -1,4 +1,4 @@
-package com.example.homebanking_reactive.models;
+package com.example.homebanking_reactive.entities;
 
 import com.example.homebanking_reactive.enums.RoleType;
 import org.springframework.data.annotation.Id;
@@ -7,7 +7,7 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.util.UUID;
 
 @Table("clients")
-public class ClientModel {
+public class ClientEntity {
 
     @Id
     private UUID id;
@@ -16,10 +16,10 @@ public class ClientModel {
 
     private RoleType role;
 
-    public ClientModel() {
+    public ClientEntity() {
     }
 
-    private ClientModel(ClientBuilder builder) {
+    private ClientEntity(ClientBuilder builder) {
         this.name = builder.name;
         this.lastName = builder.lastName;
         this.role = builder.role != null ? builder.role : RoleType.CLIENT;
@@ -62,8 +62,8 @@ public class ClientModel {
             return this;
         }
 
-        public ClientModel build() {
-            return new ClientModel(this);
+        public ClientEntity build() {
+            return new ClientEntity(this);
         }
     }
 

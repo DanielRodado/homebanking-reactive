@@ -1,4 +1,4 @@
-package com.example.homebanking_reactive.models;
+package com.example.homebanking_reactive.entities;
 
 import com.example.homebanking_reactive.enums.TransactionType;
 import org.springframework.data.annotation.Id;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Table("transactions")
-public class TransactionModel {
+public class TransactionEntity {
 
     @Id
     private UUID id;
@@ -23,10 +23,10 @@ public class TransactionModel {
     private LocalDateTime dateTime;
     private UUID accountId;
 
-    public TransactionModel() {
+    public TransactionEntity() {
     }
 
-    public TransactionModel(Double amount, TransactionType transactionType, String description, LocalDateTime dateTime) {
+    public TransactionEntity(Double amount, TransactionType transactionType, String description, LocalDateTime dateTime) {
         this.amount = amount;
         this.transactionType = transactionType;
         this.description = description;

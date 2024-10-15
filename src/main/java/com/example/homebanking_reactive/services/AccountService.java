@@ -1,7 +1,7 @@
 package com.example.homebanking_reactive.services;
 
 import com.example.homebanking_reactive.enums.AccountType;
-import com.example.homebanking_reactive.models.AccountModel;
+import com.example.homebanking_reactive.entities.AccountEntity;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -11,15 +11,15 @@ public interface AccountService {
 
     // Methods Repository
 
-    Mono<AccountModel> getAccountById(String accountId);
+    Mono<AccountEntity> getAccountById(String accountId);
 
-    Mono<AccountModel> getAccountByNumber(String accountNumber);
+    Mono<AccountEntity> getAccountByNumber(String accountNumber);
 
-    Flux<AccountModel> getAccountsByClientId(UUID clientId);
+    Flux<AccountEntity> getAccountsByClientId(UUID clientId);
 
-    Flux<AccountModel> getAccounts();
+    Flux<AccountEntity> getAccounts();
 
-    Mono<AccountModel> saveAccount(AccountModel account);
+    Mono<AccountEntity> saveAccount(AccountEntity account);
 
     // Methods Controller
 
@@ -29,9 +29,9 @@ public interface AccountService {
 
     Mono<String> generateAccountNumber();
 
-    Mono<AccountModel> generateAccount(AccountType accountType, UUID clientId);
+    Mono<AccountEntity> generateAccount(AccountType accountType, UUID clientId);
 
-    Mono<Void> addClientToAccount(AccountModel account, UUID clientId);
+    Mono<Void> addClientToAccount(AccountEntity account, UUID clientId);
 
     Mono<Void> deleteAccount(String id);
 }

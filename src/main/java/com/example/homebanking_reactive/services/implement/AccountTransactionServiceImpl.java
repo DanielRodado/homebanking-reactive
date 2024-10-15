@@ -4,8 +4,8 @@ import com.example.homebanking_reactive.dto.accountDTO.AccountDTO;
 import com.example.homebanking_reactive.dto.transactionDTO.TransactionApplicationDTO;
 import com.example.homebanking_reactive.dto.transactionDTO.TransactionDTO;
 import com.example.homebanking_reactive.enums.TransactionType;
-import com.example.homebanking_reactive.models.AccountModel;
-import com.example.homebanking_reactive.models.TransactionModel;
+import com.example.homebanking_reactive.entities.AccountEntity;
+import com.example.homebanking_reactive.entities.TransactionEntity;
 import com.example.homebanking_reactive.services.AccountService;
 import com.example.homebanking_reactive.services.AccountTransactionService;
 import com.example.homebanking_reactive.services.TransactionService;
@@ -45,7 +45,7 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
     }
 
     @Override
-    public Mono<AccountDTO> getTransactionsFromAccount(AccountModel account) {
+    public Mono<AccountDTO> getTransactionsFromAccount(AccountEntity account) {
         return getTransactionDTOByAccountId(account.getId()).map(transactionDTOS -> toAccountDTO(account, transactionDTOS));
     }
 
@@ -67,7 +67,7 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
     // Methods Controller
 
     @Override
-    public Flux<TransactionModel> getTransactionsByAccountId(String accountId) {
+    public Flux<TransactionEntity> getTransactionsByAccountId(String accountId) {
         return accountServiceValidation.validateAccountId(accountId).flatMapMany(transactionService::getTransactionsByAccountId);
     }
 
@@ -95,20 +95,20 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
     }
 
     @Override
-    public Mono<TransactionModel> generateTransaction(TransactionApplicationDTO transactionAppDTO, TransactionType transactionType) {
+    public Mono<TransactionEntity> generateTransaction(TransactionApplicationDTO transactionAppDTO, TransactionType transactionType) {
         return Mono.just(toTransaction(transactionAppDTO, transactionType));
     }
 
     @Override
-    public Mono<TransactionModel> assignTransactionToAccount(TransactionModel transaction, UUID accountId) {
+    public Mono<TransactionEntity> assignTransactionToAccount(TransactionEntity transaction, UUID accountId) {
         transaction.addAccount(accountId);
         return Mono.just(transaction);
     }
 
     @Override
-    public Mono<TransactionModel> getAccountToAssignTransaction(TransactionApplicationDTO transactionAppDTO,
-                                                                String accountNumber,
-                                                                TransactionType transactionType) {
+    public Mono<TransactionEntity> getAccountToAssignTransaction(TransactionApplicationDTO transactionAppDTO,
+                                                                 String accountNumber,
+                                                                 TransactionType transactionType) {
         return accountService
                 .getAccountByNumber("V-"+accountNumber)
                 .flatMap(accountModel ->
@@ -121,7 +121,7 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
     }
 
     @Override
-    public Mono<AccountModel> setBalanceToAccount(AccountModel account, Double amount, TransactionType transactionType) {
+    public Mono<AccountEntity> setBalanceToAccount(AccountEntity account, Double amount, TransactionType transactionType) {
         account.setBalance(transactionType.equals(TransactionType.DEBIT)
                 ? account.getBalance() - amount
                 : account.getBalance() + amount);

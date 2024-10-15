@@ -1,7 +1,7 @@
 package com.example.homebanking_reactive.services.implement;
 
 import com.example.homebanking_reactive.dto.transactionDTO.TransactionDTO;
-import com.example.homebanking_reactive.models.TransactionModel;
+import com.example.homebanking_reactive.entities.TransactionEntity;
 import com.example.homebanking_reactive.repositories.TransactionRepository;
 import com.example.homebanking_reactive.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class TransactionServiceImpl implements TransactionService {
     private TransactionRepository transactionRepository;
 
     @Override
-    public Flux<TransactionModel> getTransactionsByAccountId(UUID accountId) {
+    public Flux<TransactionEntity> getTransactionsByAccountId(UUID accountId) {
         return transactionRepository.findByAccountId(accountId);
     }
 
@@ -28,7 +28,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Mono<TransactionModel> saveTransaction(TransactionModel transaction) {
+    public Mono<TransactionEntity> saveTransaction(TransactionEntity transaction) {
         return transactionRepository.save(transaction);
     }
 

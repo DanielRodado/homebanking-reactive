@@ -3,7 +3,7 @@ package com.example.homebanking_reactive.services.implement;
 import com.example.homebanking_reactive.enums.AccountType;
 import com.example.homebanking_reactive.exceptions.accountExceptions.AccountNotFoundException;
 import com.example.homebanking_reactive.exceptions.accountExceptions.AccountNumberAlreadyExistsException;
-import com.example.homebanking_reactive.models.AccountModel;
+import com.example.homebanking_reactive.entities.AccountEntity;
 import com.example.homebanking_reactive.repositories.AccountRepository;
 import com.example.homebanking_reactive.services.AccountService;
 import com.example.homebanking_reactive.utils.AccountUtil;
@@ -31,31 +31,31 @@ public class AccountServiceImpl implements AccountService {
     // Methods Repository
 
     @Override
-    public Mono<AccountModel> getAccountById(String accountId) {
+    public Mono<AccountEntity> getAccountById(String accountId) {
         return accountServiceValidation.validateAccountId(accountId)
                 .flatMap(accountRepository::findById)
                 .switchIfEmpty(Mono.error(new AccountNotFoundException(ACCOUNT_NOT_FOUND)));
     }
 
     @Override
-    public Mono<AccountModel> getAccountByNumber(String accountNumber) {
+    public Mono<AccountEntity> getAccountByNumber(String accountNumber) {
         return accountRepository
                 .findByNumber(accountNumber)
                 .switchIfEmpty(Mono.error(new AccountNotFoundException(ACCOUNT_NOT_FOUND)));
     }
 
     @Override
-    public Flux<AccountModel> getAccountsByClientId(UUID clientId) {
+    public Flux<AccountEntity> getAccountsByClientId(UUID clientId) {
         return accountRepository.findByClientId(clientId);
     }
 
     @Override
-    public Flux<AccountModel> getAccounts() {
+    public Flux<AccountEntity> getAccounts() {
         return accountRepository.findAll();
     }
 
     @Override
-    public Mono<AccountModel> saveAccount(AccountModel account) {
+    public Mono<AccountEntity> saveAccount(AccountEntity account) {
         return accountRepository.save(account);
     }
 
@@ -86,9 +86,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Mono<AccountModel> generateAccount(AccountType accountType, UUID clientId) {
+    public Mono<AccountEntity> generateAccount(AccountType accountType, UUID clientId) {
         return generateUniqueAccountNumber()
-                .flatMap(accountNumber -> Mono.just(new AccountModel(accountNumber, 0.0, accountType,
+                .flatMap(accountNumber -> Mono.just(new AccountEntity(accountNumber, 0.0, accountType,
                         LocalDate.now())))
                 .flatMap(accountModel -> addClientToAccount(accountModel, clientId)
                         .thenReturn(accountModel)
@@ -96,7 +96,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Mono<Void> addClientToAccount(AccountModel account, UUID clientId) {
+    public Mono<Void> addClientToAccount(AccountEntity account, UUID clientId) {
         account.addClientId(clientId);
         return Mono.empty();
     }
