@@ -1,6 +1,7 @@
 package com.example.homebanking_reactive.dto.clientDTO;
 
 import com.example.homebanking_reactive.dto.accountDTO.AccountDTO;
+import com.example.homebanking_reactive.dto.cardDTO.CardDTO;
 import com.example.homebanking_reactive.dto.loanDTO.ClientLoanDTO;
 import com.example.homebanking_reactive.enums.RoleType;
 import com.example.homebanking_reactive.entities.ClientEntity;
@@ -17,6 +18,8 @@ public class ClientDTO {
     private final RoleType role;
 
     private Set<AccountDTO> accounts;
+
+    private Set<CardDTO> cards;
 
     private Set<ClientLoanDTO> loans;
 
@@ -54,6 +57,14 @@ public class ClientDTO {
 
     public void setAccountDTOS(Set<AccountDTO> accountDTOS) {
         this.accounts = accountDTOS;
+    }
+
+    public Set<CardDTO> getCards() {
+        return cards;
+    }
+
+    public void setCards(Set<CardDTO> cards) {
+        this.cards = cards;
     }
 
     public Set<ClientLoanDTO> getLoans() {

@@ -138,4 +138,5 @@ public class CardEntity {
     public void addClient(UUID clientId) {
         this.clientId = clientId;
     }
+
 }

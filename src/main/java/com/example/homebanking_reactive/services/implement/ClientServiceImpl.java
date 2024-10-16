@@ -7,6 +7,7 @@ import com.example.homebanking_reactive.mappers.ClientMapper;
 import com.example.homebanking_reactive.entities.ClientEntity;
 import com.example.homebanking_reactive.repositories.ClientRepository;
 import com.example.homebanking_reactive.services.ClientAccountService;
+import com.example.homebanking_reactive.services.ClientCardService;
 import com.example.homebanking_reactive.services.ClientLoanService;
 import com.example.homebanking_reactive.services.ClientService;
 import com.example.homebanking_reactive.validations.services.ClientServiceValidation;
@@ -25,6 +26,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Autowired
     private ClientAccountService clientAccountService;
+
+    @Autowired
+    private ClientCardService clientCardService;
 
     @Autowired
     private ClientLoanService clientLoanService;
@@ -58,6 +62,7 @@ public class ClientServiceImpl implements ClientService {
     public Mono<ClientDTO> getClientDTOById(String clientId) {
         return getClientById(clientId)
                 .flatMap(clientAccountService::getAccountsFromClient)
+                .flatMap(clientCardService::getCardsFromClient)
                 .flatMap(clientLoanService::getClientLoansFromClient);
     }
 
@@ -65,6 +70,7 @@ public class ClientServiceImpl implements ClientService {
     public Flux<ClientDTO> getClientsDTO() {
         return getClients()
                 .flatMap(clientAccountService::getAccountsFromClient)
+                .flatMap(clientCardService::getCardsFromClient)
                 .flatMap(clientLoanService::getClientLoansFromClient);
     }
 
