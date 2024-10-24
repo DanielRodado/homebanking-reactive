@@ -46,6 +46,11 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public Mono<ClientEntity> getClientByEmail(String clientEmail) {
+        return clientRepository.findByEmail(clientEmail);
+    }
+
+    @Override
     public Flux<ClientEntity> getClients() {
         return clientRepository.findAll();
     }
@@ -61,6 +66,14 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Mono<ClientDTO> getClientDTOById(String clientId) {
         return getClientById(clientId)
+                .flatMap(clientAccountService::getAccountsFromClient)
+                .flatMap(clientCardService::getCardsFromClient)
+                .flatMap(clientLoanService::getClientLoansFromClient);
+    }
+
+    @Override
+    public Mono<ClientDTO> getClientDTOByEmail(String clientEmail) {
+        return getClientByEmail(clientEmail)
                 .flatMap(clientAccountService::getAccountsFromClient)
                 .flatMap(clientCardService::getCardsFromClient)
                 .flatMap(clientLoanService::getClientLoansFromClient);

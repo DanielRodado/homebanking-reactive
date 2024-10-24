@@ -12,6 +12,8 @@ public interface ClientService {
 
     Mono<ClientEntity> getClientById(String clientId);
 
+    Mono<ClientEntity> getClientByEmail(String clientEmail);
+
     Flux<ClientEntity> getClients();
 
     Mono<ClientEntity> saveClient(ClientEntity client);
@@ -19,6 +21,8 @@ public interface ClientService {
     // Methods Return DTO
 
     Mono<ClientDTO> getClientDTOById(String clientId);
+
+    Mono<ClientDTO> getClientDTOByEmail(String clientEmail);
 
     Flux<ClientDTO> getClientsDTO();
 
